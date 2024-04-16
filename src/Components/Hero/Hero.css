@@ -43,6 +43,15 @@
     font-weight: 500;
     color:white;
     background: #ff4141;
+    cursor: pointer;
+    transition: all 0.6s ease;
+}
+.hero-latest-btn:hover{
+    transform: scale(1.05);
+}
+.hero-latest-btn:active{
+    color:#a9a0a0;
+    transform: scale(0.97);
 }
 .hero-right{
     flex:1;

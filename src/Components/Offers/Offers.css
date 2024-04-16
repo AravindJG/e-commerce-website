@@ -41,6 +41,7 @@
 }
 .offers-left button:active{
     color:#a9a0a0;
+    transform: scale(0.97);
 }
 .offers-right{
     flex: 1;

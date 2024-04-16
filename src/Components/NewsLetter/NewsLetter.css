@@ -41,7 +41,7 @@
 .newsletter button{
     width: 210px;
     height: 70px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     border-radius: 80px;
     background: black;
@@ -54,5 +54,6 @@
 }
 .newsletter button:active{
     color:#616161;
+    transform: scale(0.97);
     transition: 0.6s;
 }
