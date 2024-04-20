@@ -181,6 +181,7 @@
     .nav-login-cart{
         flex-direction: column;
         align-items: center;
+        margin: 15% 25%;
     }
     .nav-login-cart button{
         width: 180px;
@@ -195,45 +196,39 @@
     }
     .hide-mobile-menu{
         right: -50%;
+    }
+    .icon-move{
+        left: 55%;
+        transition: .05s;
     }  
 }
 @media screen and (max-width:697px) {
-    .nav-menu li{
+    .nav-menu li, .nav-login-cart{
         margin: 15% 24%;
-    }
-    .hide-mobile-menu{
-        right: -50%;
     }
 }
 @media screen and (max-width:640px) {
-    .nav-menu li{
+    .nav-menu li, .nav-login-cart{
         margin: 15% 22%;
-    }
-    .hide-mobile-menu{
-        right: -50%;
     }
 }
 @media screen and (max-width:592px) {
-    .nav-menu li{
+    .nav-menu li, .nav-login-cart{
         margin: 15% 20%;
-    }
-    .hide-mobile-menu{
-        right: -50%;
     }
 }
 @media screen and (max-width:478px) {
-    .nav-menu li{
+    .nav-menu li, .nav-login-cart{
         margin: 15% 16%;
     }
-    .hide-mobile-menu{
-        right: -50%;
+}
+@media screen and (max-width:425px) {
+    .nav-menu li{
+        margin: 15% 8%;
     }
 }
-@media screen and (max-width:320px) {
+@media screen and (max-width:350px) {
     .nav-menu li{
-        margin: 15% 13%;
-    }
-    .hide-mobile-menu{
-        right: -50%;
+        margin: 15% -5%;
     }
 }

@@ -58,3 +58,41 @@
     height: 3px;
     background: #c7c7c7;    
 }
+@media screen and (max-width:698px) {
+    .footer-logo{
+        gap: 10px;
+    }
+    .footer-links{
+        gap: 30px;
+    }
+}
+@media screen and (max-width:598px) {
+    .footer-links{
+        gap: 20px;
+    }
+}
+@media screen and (max-width:530px) {
+    .footer{
+        gap: 30px;
+    }
+    .footer-logo img{
+        width: 60px;
+        height: 60px;
+    }
+    .footer-logo p{
+        font-size: 40px;
+    }
+    .footer-links{
+        flex-direction: column;
+    }
+}
+@media screen and (max-width:420px){
+    .footer-copyright p{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width:380px){
+    .footer-copyright p{
+        font-size: 15px;
+    }
+}

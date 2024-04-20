@@ -21,7 +21,7 @@ function Navbar() {
           <img src={logo} alt='app logo' /> 
           <p>SHOPPER</p>
         </div>
-        <div className="hamburgur-icon" onClick={toggleMenu}>{mobileMenu ? <i className="fa-solid fa-arrow-left"></i> : <i className="fa-solid fa-bars"></i>}</div>
+        <div className={mobileMenu ? "hamburgur-icon icon-move":"hamburgur-icon"} onClick={toggleMenu}>{mobileMenu ? <i className="fa-solid fa-arrow-left"></i> : <i className="fa-solid fa-bars"></i>}</div>
         <div className = {mobileMenu ?  'mobile-menu': 'mobile-menu hide-mobile-menu' }>
           <div className='nav-menu'>
             <li onClick={() => { setMenu("shop");setMobileMenu(false);}}><Link style={{ textDecoration: 'none', color: '#626262' }} to='/'>Shop</Link>{menu === "shop" ? <hr /> : null}</li>
