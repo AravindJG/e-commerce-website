@@ -10,7 +10,7 @@ function NewCollections() {
   useEffect(()=>{
     async function getCollections(){
       try{
-        var response = await axios.get("http://localhost:5000/collections");
+        var response = await axios.get("https://e-commerce-backend-gvt2.onrender.com/collections");
         response = response.data;
         setCollections(response);
       }catch(error){

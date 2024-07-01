@@ -11,7 +11,7 @@ function Popular() {
   useEffect(()=>{
     async function getPopularData(){
       try{
-        var response = await axios.get("http://localhost:5000/popular");
+        var response = await axios.get("https://e-commerce-backend-gvt2.onrender.com/popular");
         response = response.data;
         setPopularData(response);
       }catch(error){
