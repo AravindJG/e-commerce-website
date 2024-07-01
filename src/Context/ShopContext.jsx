@@ -1,18 +1,39 @@
-import React, { createContext, useState } from "react"
-import all_product from '../Components/Assets/all_product'
-
+import React, { createContext, useEffect, useState } from "react"
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const ShopContext = createContext();
 
-function getDefaultCart(){
-    let cart = {};
-    for (let index = 0; index < all_product.length+1; index++) {
-        cart[index] = 0;
-    }
-    return cart;
-}
-
 function ShopContextProvider(props) {
+    const [products, setProducts] = useState([]);
     const [cartItems,setCartItems] = useState(getDefaultCart());
+
+    useEffect(()=>{
+        async function getProducts(){
+            try{
+                let response = await axios.get('http://localhost:5000/');
+                response = response.data;
+                setProducts(response);
+                toast.success("Server connected");
+            }catch(error){
+                toast.error("Server connection failed")
+                console.log(error);
+            }
+        }
+        getProducts();
+    },[]);
+
+    useEffect(()=>{
+        setCartItems(getDefaultCart());
+    },[products]);
+
+    function getDefaultCart(){
+        let cart = {};
+        for (let index = 0; index < products.length+1; index++) {
+            cart[index] = 0;
+        }
+        return cart;
+    }
 
     function addToCart(itemId){
         setCartItems((prev) => ({...prev,[itemId]:prev[itemId]+1}));
@@ -26,7 +47,7 @@ function ShopContextProvider(props) {
         let totalAmount = 0;
         for(const item in cartItems) {
             if(cartItems[item] > 0) {
-                let itemInfo = all_product.find((product)=>product.id === Number(item))
+                let itemInfo = products.find((product)=>product.id === Number(item))
                 totalAmount += itemInfo.new_price * cartItems[item]
             }
         }
@@ -41,11 +62,12 @@ function ShopContextProvider(props) {
         }
         return totalItems;
     }
-    const contextValue = {all_product,cartItems,addToCart,removeFromCart,getTotalCartAmount,getTotalCartItems};
+    const contextValue = {products,cartItems,addToCart,removeFromCart,getTotalCartAmount,getTotalCartItems};
 
     return (
         <ShopContext.Provider value={contextValue}>
             {props.children}
+            <ToastContainer />
         </ShopContext.Provider>
     )
 }
