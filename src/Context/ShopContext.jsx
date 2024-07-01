@@ -14,7 +14,7 @@ function ShopContextProvider(props) {
                 let response = await axios.get('http://localhost:5000/');
                 response = response.data;
                 setProducts(response);
-                toast.success("Server connected");
+                toast.success("Server connection successful");
             }catch(error){
                 toast.error("Server connection failed")
                 console.log(error);
