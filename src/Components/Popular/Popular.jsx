@@ -15,7 +15,7 @@ function Popular() {
         response = response.data;
         setPopularData(response);
       }catch(error){
-        toast.error("Failed to retrive popular products");
+        toast.error(error.message);
         console.log(error);
       } 
     }

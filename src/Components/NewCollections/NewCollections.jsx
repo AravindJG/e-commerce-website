@@ -14,7 +14,7 @@ function NewCollections() {
         response = response.data;
         setCollections(response);
       }catch(error){
-        toast.error("Failed to retrive new collections");
+        toast.error(error.message);
         console.log(error);
       }
     }

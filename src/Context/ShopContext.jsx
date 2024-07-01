@@ -16,7 +16,7 @@ function ShopContextProvider(props) {
                 setProducts(response);
                 toast.success("Server connection successful");
             }catch(error){
-                toast.error("Server connection failed")
+                toast.error(error.message);
                 console.log(error);
             }
         }
