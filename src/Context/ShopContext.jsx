@@ -25,6 +25,7 @@ function ShopContextProvider(props) {
 
     useEffect(()=>{
         setCartItems(getDefaultCart());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[products]);
 
     function getDefaultCart(){
