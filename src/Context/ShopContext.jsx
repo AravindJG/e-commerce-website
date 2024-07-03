@@ -11,7 +11,7 @@ function ShopContextProvider(props) {
     useEffect(()=>{
         async function getProducts(){
             try{
-                let response = await axios.get('https://e-commerce-backend-gvt2.onrender.com');
+                let response = await axios.get('http://localhost:5000/');
                 response = response.data;
                 setProducts(response);
                 toast.success("Server connection successful");
