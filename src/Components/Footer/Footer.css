@@ -58,41 +58,29 @@
     height: 3px;
     background: #c7c7c7;    
 }
-@media screen and (max-width:698px) {
-    .footer-logo{
-        gap: 10px;
-    }
-    .footer-links{
-        gap: 30px;
-    }
-}
-@media screen and (max-width:598px) {
-    .footer-links{
+
+@media(max-width:800px){
+    .footer{
         gap: 20px;
     }
-}
-@media screen and (max-width:530px) {
-    .footer{
-        gap: 30px;
+    .footer-logo{
+        gap: 10px;
+        align-items: end;
     }
     .footer-logo img{
-        width: 60px;
-        height: 60px;
+        width: 40px;
     }
     .footer-logo p{
-        font-size: 40px;
+        font-size: 25px;
     }
     .footer-links{
-        flex-direction: column;
+        font-size: 14px;
+        gap: 10px;
     }
-}
-@media screen and (max-width:420px){
-    .footer-copyright p{
-        font-size: 18px;
+    .footer-social-icon img{
+        width: 22px;
     }
-}
-@media screen and (max-width:380px){
-    .footer-copyright p{
-        font-size: 15px;
+    .footer-copyright{
+        font-size: 13px;
     }
 }

@@ -16,9 +16,9 @@ function CartItems() {
                 <p>Remove</p>
             </div>
             <hr />
-            {products.map((item) => {
+            {products.map((item,i) => {
                 if (cartItems[item.id] > 0) {
-                    return <div>
+                    return <div key={i}>
                         <div className="cartitems-format cartitems-format-main">
                             <img src={item.image} alt="" className='carticon-product-icon' />
                             <p>{item.name}</p>
