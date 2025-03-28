@@ -1,8 +1,13 @@
 import React from 'react'
+import Navbar from './Components/Navbar/Navbar'
+import Admin from './Pages/Admin/Admin'
 
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <Navbar/>
+      <Admin/>
+    </div>
   )
 }
 
