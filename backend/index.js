@@ -92,6 +92,114 @@ app.get('/popularwomen', async (req, res) => {
     res.send(popular_in_women);
 });
 
+//for register 
+app.post('/signup',async(req,res)=>{
+    const check= await User.findOne({email:req.body.email})
+    if(check){
+      return res.status(400).json({success:false,errors:"existing user found with same email address"})
+    }
+    let cart={}
+    for (let i = 0; i < 300; i++) {
+         cart[i]=0;
+    }
+    const user=new User({
+      name:req.body.name,
+      email:req.body.email,
+      password:req.body.password,
+      cartData:cart
+    })
+       
+    await user.save()
+     //token
+    const data={
+        user:{
+            id:user.id
+        }
+    }
+     const token=jwt.sign(data,'secret_ecom')
+     res.json({success:true,token})
+})
+  
+  //login
+app.post('/login',async(req,res)=>{
+    const user=await User.findOne({email:req.body.email})
+    if(user){
+      const passCompare = req.body.password === user.password
+      if(passCompare){
+        const data={
+          user:{
+            id:user.id
+          }
+        }
+        const token=jwt.sign(data,'secret_ecom')
+        res.json({success:true,token})
+      }
+      else{
+        res.json({success:false,error:"Wrong Password"})
+      }
+    }
+    else{
+      res.json({success:false,error:"Invalid User"})
+    }
+})
+  
+const fetchUser = (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) {
+      return res.status(401).send({ errors: "Please authenticate using a valid token." });
+    }
+  
+    try {
+      const data = jwt.verify(token, 'secret_ecom');
+      req.user = data.user;
+      next();
+    } catch (error) {
+      return res.status(401).send({ errors: "Invalid token, please authenticate again." });
+    }
+};
+  
+app.post('/addcart', fetchUser, async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.user.id }); 
+  
+      const itemId = req.body.itemid;
+  
+      user.cartData[itemId] += 1;
+      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: user.cartData });
+  
+      res.json({ message: 'Item added to cart successfully.', cartData: user.cartData });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ errors: 'Internal server error, try again later.' });
+    }
+});
+  
+  //remove item from a cart 
+app.post('/removefromcart', fetchUser, async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.user.id }); 
+  
+      const itemId = req.body.itemid;
+       if(user.cartData[itemId]>0)
+      user.cartData[itemId] -= 1;
+      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: user.cartData });
+  
+      // Return success response with updated cart
+      res.json({ message: 'Item removed from the cart successfully.', cartData: user.cartData });
+    } catch (error) {
+      // Handle unexpected errors
+      console.error(error);
+      res.status(500).send({ errors: 'Internal server error, try again later.' });
+    }
+});
+  
+  
+  //creating endpoint to get cartData
+app.get('/getcart',fetchUser,async(req,res)=>{
+    const user=await User.findOne({_id:req.user.id})
+    res.json(user.cartData)
+})
+
 // mongoose.connect("mongodb://localhost:27017/ecommerce")
 //     .then(() => console.log("MongoDB connected"))
 //     .catch((err) => console.log("Error connecting to MongoDB", err));

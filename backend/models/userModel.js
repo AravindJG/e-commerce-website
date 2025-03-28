@@ -12,7 +12,7 @@ const userSchema=new mongoose.Schema(
         password:{
             type:String,
         },
-        cartdata:{
+        cartData:{
             type:Object,
         },
         date:{
