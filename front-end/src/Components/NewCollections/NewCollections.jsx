@@ -8,18 +8,23 @@ function NewCollections() {
   const [collections, setCollections] = useState([]);
 
   useEffect(()=>{
-    async function getCollections(){
-      try{
-        var response = await axios.get("http://localhost:5000/collections");
-        response = response.data;
-        setCollections(response);
-      }catch(error){
-        toast.error(error.message);
-        console.log(error);
-      }
-    }
-    getCollections();
-  },[]);
+    fetch('http://localhost:4000/newcollections')
+    .then((response)=>response.json())
+    .then((data)=>setCollections(data));
+  },[])
+  // useEffect(()=>{
+  //   async function getCollections(){
+  //     try{
+  //       var response = await axios.get("http://localhost:5000/collections");
+  //       response = response.data;
+  //       setCollections(response);
+  //     }catch(error){
+  //       toast.error(error.message);
+  //       console.log(error);
+  //     }
+  //   }
+  //   getCollections();
+  // },[]);
 
   return (
     <div className='new-collections'>
