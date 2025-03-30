@@ -6,28 +6,32 @@ import axios from 'axios';
 
 
 function Popular() {
-  const [popularData,setPopularData] = useState([]);
-
+  const [popularProducts,setPopularProducts] = useState([]);
   useEffect(()=>{
-    async function getPopularData(){
-      try{
-        var response = await axios.get("http://localhost:5000/popular");
-        response = response.data;
-        setPopularData(response);
-      }catch(error){
-        toast.error(error.message);
-        console.log(error);
-      } 
-    }
-    getPopularData();
-  },[]);
+    fetch('http:localhost:4000/popularwomen')
+    .then((reponse)=>reponse.json())
+    .then((data)=>setPopularProducts(data))
+  },[])
+  // useEffect(()=>{
+  //   async function getPopularProducts(){
+  //     try{
+  //       var response = await axios.get("http://localhost:5000/popular");
+  //       response = response.data;
+  //       setPopularProducts(response);
+  //     }catch(error){
+  //       toast.error(error.message);
+  //       console.log(error);
+  //     } 
+  //   }
+  //   getPopularProducts();
+  // },[]);
 
   return (
     <div className='popular'>
         <h1>POPULAR IN WOMEN</h1>
         <hr />
         <div className="popular-item">
-            {popularData.map((item,i)=>{
+            {popularProducts.map((item,i)=>{
                 return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price={item.old_price} />
             })}
         </div>
