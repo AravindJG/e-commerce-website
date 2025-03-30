@@ -9,24 +9,42 @@ function ShopContextProvider(props) {
     const [cartItems,setCartItems] = useState(getDefaultCart());
 
     useEffect(()=>{
-        async function getProducts(){
-            try{
-                let response = await axios.get('http://localhost:5000/');
-                response = response.data;
-                setProducts(response);
-                toast.success("Server connection successful");
-            }catch(error){
-                toast.error(error.message);
-                console.log(error);
-            }
-        }
-        getProducts();
-    },[]);
+        fetch('http://localhost:4000/allproducts')
+        .then((response)=>response.json())
+        .then((data)=>setProducts(data))
 
-    useEffect(()=>{
-        setCartItems(getDefaultCart());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[products]);
+        if(localStorage.getItem('auth-token')){
+            fetch('http:localhost:4000/getcart',{
+                method:'POST',
+                headers:{
+                    Accept:'application/form-data',
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                    'Content-Type':'application/json',
+                },
+                body:"",
+            }).then((response)=>response.json())
+            .then((data)=>setCartItems(data));
+        }
+    },[])
+    // useEffect(()=>{
+    //     async function getProducts(){
+    //         try{
+    //             let response = await axios.get('http://localhost:5000/');
+    //             response = response.data;
+    //             setProducts(response);
+    //             toast.success("Server connection successful");
+    //         }catch(error){
+    //             toast.error(error.message);
+    //             console.log(error);
+    //         }
+    //     }
+    //     getProducts();
+    // },[]);
+
+    // useEffect(()=>{
+    //     setCartItems(getDefaultCart());
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[products]);
 
     function getDefaultCart(){
         let cart = {};
@@ -38,10 +56,36 @@ function ShopContextProvider(props) {
 
     function addToCart(itemId){
         setCartItems((prev) => ({...prev,[itemId]:prev[itemId]+1}));
+        if(localStorage.getItem('auth-token')){
+            fetch('http:localhost:4000/addtocart',{
+                method:'POST',
+                headers:{
+                    Accept:'application/form-data',
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({"itemId":itemId}),
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data));
+        }
     }
 
     function removeFromCart(itemId){
         setCartItems((prev) => ({...prev,[itemId]:prev[itemId]-1}));
+        if(localStorage.getItem('auth-token')){
+            fetch('http:localhost:4000/removefromcart',{
+                method:'POST',
+                headers:{
+                    Accept:'application/form-data',
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({"itemId":itemId}),
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data));
+        }
     }
 
     function getTotalCartAmount() {
