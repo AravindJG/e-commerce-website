@@ -14,12 +14,12 @@ app.use(cors());
 
 
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //   cb(null, 'upload/images'); 
-    // },
-    filename: (req, file, cb) => {
-      cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-    },
+  destination: (req, file, cb) => {
+    cb(null, 'upload/images'); 
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+  },
 });
 
 const upload = multer({ storage: storage });
@@ -27,11 +27,11 @@ const upload = multer({ storage: storage });
 app.use('/images', express.static('upload/images'));
 
 app.post('/upload', upload.single('product'), (req, res) => {
-    // if (!req.file) {
-    //   return res.status(400).json({ success: 0, message: 'No file uploaded' });
-    // }
+    if (!req.file) {
+      return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    }
   
-    // console.log("File uploaded successfully:", req.file);
+    console.log("File uploaded successfully:", req.file);
   
     res.json({
       success: 1,
@@ -158,16 +158,17 @@ const fetchUser = (req, res, next) => {
     }
 };
   
-app.post('/addcart', fetchUser, async (req, res) => {
+app.post('/addtocart', fetchUser, async (req, res) => {
     try {
-      const user = await User.findOne({ _id: req.user.id }); 
+      const userData = await User.findOne({ _id: req.user.id }); 
   
-      const itemId = req.body.itemid;
+      const itemId = req.body.itemId;
   
-      user.cartData[itemId] += 1;
-      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: user.cartData });
+      userData.cartData[itemId] += 1;
+      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
   
-      res.json({ message: 'Item added to cart successfully.', cartData: user.cartData });
+      // res.send("Item added to cart successfully.");
+      res.json({ message: 'Item added to cart successfully.', cartData: userData.cartData });
     } catch (error) {
       console.error(error);
       res.status(500).send({ errors: 'Internal server error, try again later.' });
@@ -177,15 +178,15 @@ app.post('/addcart', fetchUser, async (req, res) => {
   //remove item from a cart 
 app.post('/removefromcart', fetchUser, async (req, res) => {
     try {
-      const user = await User.findOne({ _id: req.user.id }); 
+      const userData = await User.findOne({ _id: req.user.id }); 
   
-      const itemId = req.body.itemid;
-       if(user.cartData[itemId]>0)
-      user.cartData[itemId] -= 1;
-      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: user.cartData });
-  
+      const itemId = req.body.itemId;
+      if(userData.cartData[itemId] > 0)
+        userData.cartData[itemId] -= 1;
+      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+      // res.send("Item removed from the cart successfully.")
       // Return success response with updated cart
-      res.json({ message: 'Item removed from the cart successfully.', cartData: user.cartData });
+      res.json({ message: 'Item removed from the cart successfully.', cartData: userData.cartData });
     } catch (error) {
       // Handle unexpected errors
       console.error(error);
@@ -196,8 +197,8 @@ app.post('/removefromcart', fetchUser, async (req, res) => {
   
   //creating endpoint to get cartData
 app.get('/getcart',fetchUser,async(req,res)=>{
-    const user=await User.findOne({_id:req.user.id})
-    res.json(user.cartData)
+    const userData=await User.findOne({_id:req.user.id})
+    res.json(userData.cartData)
 })
 
 // mongoose.connect("mongodb://localhost:27017/ecommerce")
@@ -208,11 +209,11 @@ app.get('/getcart',fetchUser,async(req,res)=>{
 
 
 // //port connection 
-// app.listen(port,(error)=>{
-//     if(!error){
-//    console.log("server is running on port"+port)
-//     }
-//     else{
-//      console.log('error:'+error)
-//     }
-// })
+app.listen(port,(error)=>{
+    if(!error){
+   console.log("Server is running on port"+port)
+    }
+    else{
+     console.log('error:'+error)
+    }
+})
