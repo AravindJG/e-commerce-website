@@ -14,14 +14,13 @@ function ShopContextProvider(props) {
         .then((data)=>setProducts(data))
 
         if(localStorage.getItem('auth-token')){
-            fetch('http:localhost:4000/getcart',{
-                method:'POST',
+            fetch('http://localhost:4000/getcart',{
+                method:'GET',
                 headers:{
                     Accept:'application/form-data',
                     'auth-token':`${localStorage.getItem('auth-token')}`,
                     'Content-Type':'application/json',
                 },
-                body:"",
             }).then((response)=>response.json())
             .then((data)=>setCartItems(data));
         }
@@ -48,7 +47,7 @@ function ShopContextProvider(props) {
 
     function getDefaultCart(){
         let cart = {};
-        for (let index = 0; index < products.length+1; index++) {
+        for (let index = 0; index < 300+1; index++) {
             cart[index] = 0;
         }
         return cart;
@@ -57,7 +56,7 @@ function ShopContextProvider(props) {
     function addToCart(itemId){
         setCartItems((prev) => ({...prev,[itemId]:prev[itemId]+1}));
         if(localStorage.getItem('auth-token')){
-            fetch('http:localhost:4000/addtocart',{
+            fetch('http://localhost:4000/addtocart',{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -74,7 +73,7 @@ function ShopContextProvider(props) {
     function removeFromCart(itemId){
         setCartItems((prev) => ({...prev,[itemId]:prev[itemId]-1}));
         if(localStorage.getItem('auth-token')){
-            fetch('http:localhost:4000/removefromcart',{
+            fetch('http://localhost:4000/removefromcart',{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
