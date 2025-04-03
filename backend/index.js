@@ -3,11 +3,15 @@ const port=4000;
 const app=express();
 const path=require("path");
 const mongoose=require("mongoose");
+const dotenv = require("dotenv");
 const jwt=require("jsonwebtoken");
 const multer=require("multer");
 const cors=require("cors");
 const Product = require("./models/productModel");
 const User = require("./models/userModel");
+
+dotenv.config();
+const MONGO_URL = process.env.MONGO_URL;
 
 app.use(express.json());
 app.use(cors());
@@ -201,7 +205,7 @@ app.get('/getcart',fetchUser,async(req,res)=>{
     res.json(userData.cartData)
 })
 
-mongoose.connect("mongodb+srv://admin:Aravind123@nodeapi.1jtrmhi.mongodb.net/E-commerce?retryWrites=true&w=majority&appName=NodeApi")
+mongoose.connect(MONGO_URL)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log("Error connecting to MongoDB", err));
     
