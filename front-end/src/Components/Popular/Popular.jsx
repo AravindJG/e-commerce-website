@@ -8,7 +8,7 @@ import axios from 'axios';
 function Popular() {
   const [popularProducts,setPopularProducts] = useState([]);
   useEffect(()=>{
-    fetch('http:localhost:4000/popularwomen')
+    fetch('http://localhost:4000/popularwomen')
     .then((reponse)=>reponse.json())
     .then((data)=>setPopularProducts(data))
   },[])
