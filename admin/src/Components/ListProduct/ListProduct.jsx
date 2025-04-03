@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './ListProduct.css'
 import cross_icon from '../../assets/cross_icon.png'
 
@@ -31,11 +31,11 @@ function ListProduct() {
       <h1>All Products List</h1>
       <div className='listproduct-format-main'>
         <p>Products</p>
-        <p>title</p>
+        <p>Title</p>
         <p>Old Price</p>
         <p>New Price</p>
-        <p>category</p>
-        <p>remove</p>
+        <p>Category</p>
+        <p>Remove</p>
       </div>
       <div className='listproduct-allproducts'>
         <hr />

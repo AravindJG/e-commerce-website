@@ -80,7 +80,7 @@ app.get('/allproducts',async(req,res)=>{
     res.send(products)
 })
 
-app.get('/newcollection',async(req,res)=>{
+app.get('/newcollections',async(req,res)=>{
   const products=await Product.find({})
   const new_collection=products.slice(1).slice(-8)
   res.send(new_collection)
@@ -201,9 +201,9 @@ app.get('/getcart',fetchUser,async(req,res)=>{
     res.json(userData.cartData)
 })
 
-// mongoose.connect("mongodb://localhost:27017/ecommerce")
-//     .then(() => console.log("MongoDB connected"))
-//     .catch((err) => console.log("Error connecting to MongoDB", err));
+mongoose.connect("mongodb+srv://admin:Aravind123@nodeapi.1jtrmhi.mongodb.net/E-commerce?retryWrites=true&w=majority&appName=NodeApi")
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.log("Error connecting to MongoDB", err));
     
     
 
@@ -211,7 +211,7 @@ app.get('/getcart',fetchUser,async(req,res)=>{
 // //port connection 
 app.listen(port,(error)=>{
     if(!error){
-   console.log("Server is running on port"+port)
+   console.log("Server is running on port:"+port)
     }
     else{
      console.log('error:'+error)
